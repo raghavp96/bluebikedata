@@ -8,83 +8,80 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    db = connect('creator')
-
-    cursor = db.cursor()
-
-    # Execute SQL select statement
-    cursor.execute("SELECT * FROM station")
-    # Get the number of rows in the resultset
-    numrows = cursor.rowcount
-    print(numrows)
-
-    cursor.execute("delete from station where station_id=5")
-    db.commit()
-
-    cursor.execute(
-        "insert into station(station_id, station_name, latitude, longitude, short_name, rental_methods, capacity, rental_id, eightd_has_key_dispenser, has_kiosk) values" +
-        "(5, 'Northeastern University - North Parking Lot', 42.341814, -71.090179, 'B32012', 'CREDITCARD', 15, 'https://www.bluebikes.com/app?station_id=5',false, true)")
-    db.commit()
-
-    # Execute SQL select statement
-    cursor.execute("SELECT * FROM station")
-    # Get the number of rows in the resultset
-    numrows = cursor.rowcount
-    print(numrows)
-
-    # Get and display one row at a time
-    for x in range(0, numrows):
-        row = cursor.fetchone()
-        print(row)
-
-    # Close the connection
-    db.close()
-    return 'Flask Dockerized'
+    info = {
+        "UserType" : [ "Unauthenticated", "Authenticated"],
+        "Requests" : [
+            {
+                "Type" : "GET",
+                "Path" : "/query/<querySQL>",
+                "PathDetails" : [
+                    "Query SQL must be separated by '%20' in place of spaces",
+                    "Only SELECT Statements allowed",
+                    "Unauthenticated users and authenticated users can access"
+                ]
+            },
+            {
+                "Type" : "GET",
+                "Path" : "/mutate/<querySQL>",
+                "PathDetails" : [
+                    "Query SQL must be separated by '%20' in place of spaces",
+                    "Only INSERT or UPDATE Statements allowed",
+                    "Only authenticated users can access"
+                ]
+            }
+        ]
+    }
+    return jsonify(info)
 
 
-@app.route('/<role>/query/<querySQL>')
-def query(role, querySQL):
+@app.route('/query/<querySQL>')
+def query(querySQL):
     resultsArray = []
     querySQL = querySQL.replace("%20", " ")
 
-    if (role == 'app' and querySQL.startswith("select")):
-        db = connect(role)
+    if (querySQL.startswith("select")):
+        db = connect()
 
-        cursor = db.cursor()
-        cursor.execute(querySQL)
+        try: 
+            cursor = db.cursor()
+            cursor.execute(querySQL)
 
-        row_headers = [x[0] for x in cursor.description]
-        resultset = cursor.fetchall()
+            row_headers = [x[0] for x in cursor.description]
+            resultset = cursor.fetchall()
 
-        for result_item in resultset:
-            resultsArray.append(dict(zip(row_headers, result_item)))
+            for result_item in resultset:
+                resultsArray.append(dict(zip(row_headers, result_item)))
 
-        db.close()
-    elif (role == 'creator' and querySQL.startswith("select")):
-        db = connect(role)
+            db.close()
+        except Error as err:
+            resultsArray.append("Something went wrong: {}".format(err))
+    
+    else:
+        resultsArray.append("Only SELECT queries are allowed") 
 
-        cursor = db.cursor()
-        cursor.execute(querySQL)
-        numrows = cursor.rowcount
+     
+    result = {
+        "result" : resultsArray
+    }
 
-        for x in range(0, numrows):
-            resultsArray.append(cursor.fetchone())
-        
-        db.close()
-    elif (role == 'creator' and querySQL.startswith("insert")):
-        db = connect(role)
+    return jsonify(json.loads(simplejson.dumps(result, use_decimal=True)))
+
+@app.route('/mutate/<querySQL>')
+def mutate(querySQL):
+    resultsArray = []
+    querySQL = querySQL.replace("%20", " ")
+
+    if (querySQL.startswith("select")):
+        db = connect()
 
         cursor = db.cursor()
         cursor.execute(querySQL)
         db.commit()
-        numrows = cursor.rowcount
 
-        for x in range(0, numrows):
-            resultsArray.append(cursor.fetchone())
-        
         db.close()
+    
     else:
-        resultsArray.append("Either role (", role ,") or SQL query (", querySQL, ") not allowed") 
+        resultsArray.append("Only SELECT queries are allowed") 
 
      
     result = {

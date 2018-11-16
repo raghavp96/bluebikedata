@@ -2,7 +2,7 @@
 
 import MySQLdb
 
-def connect(role):
+def connect(role="app"):
     if (role == 'app'):
         return MySQLdb.connect(
             host="35.231.197.213", 
