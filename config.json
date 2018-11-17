@@ -1,0 +1,19 @@
+{
+    "Network" : {
+        "Name" : "app_network",
+        "Containers" : [
+            {
+                "Folder" : "auth",
+                "Name" : "auth_svc",
+                "ExternalPort" : "8000",
+                "Port" : "8080"
+            },
+            {
+                "Folder" : "api",
+                "Name" : "api_svc",
+                "ExternalPort" : "8001",
+                "Port" : "8080"
+            }
+        ]
+    } 
+}

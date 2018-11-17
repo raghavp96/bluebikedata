@@ -1,2 +1,5 @@
 .DS_Store
 *.pyc
+*/role-common.json
+*/role-data-creator.json
+*/role-default.json

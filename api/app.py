@@ -1,8 +1,8 @@
 from flask import Flask, jsonify
+from db import queryDB, mutateDB
+
 import simplejson
 import json
-from db import connect
-
 
 app = Flask(__name__)
 
@@ -33,62 +33,33 @@ def hello_world():
     }
     return jsonify(info)
 
-
 @app.route('/query/<querySQL>')
-def query(querySQL):
+@app.route('/query/<querySQL>/<role>')
+def query(querySQL, role="default"):
+    result = {}
     resultsArray = []
     querySQL = querySQL.replace("%20", " ")
 
     if (querySQL.startswith("select")):
-        db = connect()
-
-        try: 
-            cursor = db.cursor()
-            cursor.execute(querySQL)
-
-            row_headers = [x[0] for x in cursor.description]
-            resultset = cursor.fetchall()
-
-            for result_item in resultset:
-                resultsArray.append(dict(zip(row_headers, result_item)))
-
-            db.close()
-        except Error as err:
-            resultsArray.append("Something went wrong: {}".format(err))
-    
+        result["result"] = queryDB(querySQL, role)
     else:
         resultsArray.append("Only SELECT queries are allowed") 
-
-     
-    result = {
-        "result" : resultsArray
-    }
+        result["result"] = resultsArray
 
     return jsonify(json.loads(simplejson.dumps(result, use_decimal=True)))
 
 @app.route('/mutate/<querySQL>')
-def mutate(querySQL):
-    resultsArray = []
+@app.route('/mutate/<querySQL>/<role>')
+def mutate(querySQL, role="default"):
+    result = {}
     querySQL = querySQL.replace("%20", " ")
 
-    if (querySQL.startswith("select")):
-        db = connect()
-
-        cursor = db.cursor()
-        cursor.execute(querySQL)
-        db.commit()
-
-        db.close()
-    
+    if (querySQL.startswith("insert")):
+        result["result"] = mutateDB(querySQL, role)
     else:
-        resultsArray.append("Only SELECT queries are allowed") 
+        result["result"] = "Only INSERT queries are allowed"
 
-     
-    result = {
-        "result" : resultsArray
-    }
-
-    return jsonify(json.loads(simplejson.dumps(result, use_decimal=True)))
+    return jsonify(json.loads(simplejson.dumps(result)))
 
 
 if __name__ == '__main__':
