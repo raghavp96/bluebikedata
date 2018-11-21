@@ -1,10 +1,59 @@
 # bluebikedata
 A database for blue bike data
 
-### Project Structure
-+
-|
-+----- db/
-	|
-	+----create\_bluebike\_db.sql
+### Project Architecture
 
+#### Outline
+- The Backend:
+	- An API Service:
+		- A container running the API of our application. Abstracts away connecting to DB and sending queries via the following API calls:
+			- GET Request: `query`, Path: `/api/query/<querySQL>`
+			- POST Request: `mutate`, Path: `/api/mutate/<querySQL>`
+	- An Auth Service:
+		- A container that gives DB credentials to the API service.
+		- Based on what type of user is calling the API, will provision a different DB connection
+			- If we are calling it from front-end server, then we assume the unauthenticated, default role ""
+			- If we are calling it via our data service, then we assume the authenticate role "data-creator"
+	- A Data Service (@TODO Need to build this):
+		- A container that calls the API to upload data to our DB
+			- Should be able to read and write to DB
+			- Will always be running, polling https://gbfs.bluebikes.com/gbfs/gbfs.json for data, and adding that to DB
+			- Will also have an additional method to upload data from CSV files
+
+- The Frontend:
+	- An NGINX server:
+		- Serves content in React and/or D3.
+		- Will be able to query DB and do some visualizations here
+		- @TODO Need to be more specific
+	
+#### Other Topics
+
+1. Roles - We mention that different services/components will be hitting the API, and that they will assume different roles. This allows us to better tighten the security on what calls a user can make to our API. The roles are:
+	- Default - The front end will assume the `default` role, allowing it only `SELECT` statements (the `/query/<querySQL>` path).
+	- Data Creator - The data service will need to be able to query and mutate the DB, and so assumes the `data-creator` role. It will be able to use `SELECT` and `INSERT` statements (the `/query/<querySQL>` and `/mutate/<querySQL>` paths).
+2. Containers - We use containers here, adopting a microservice architecture. This allows for true process isolation, and allows us to increase security.
+3. `container_manager.py` and `config.json` - Cloned from https://github.com/raghavp96/dockernetes, these enable us to run services in their own container, attach them all to the same Docker network, so they can still communicate. Config.json allows us to specify what ports the services are running on.
+	- Ex: The API service needs to get DB credentials from the Auth service.
+
+
+### Installation and Running
+
+1. Install MySQL Server on your device, or create one on Google Cloud Platform's Cloud SQL.
+	- Recommended: Create two users (beyond just the root connection): 
+		- one with only read permission (`SELECT`)
+		- the other with both read and write perm (`SELECT` and `INSERT`)
+2. Install Python 3.x: https://www.python.org/downloads/
+3. Install `pip`: https://pip.pypa.io/en/stable/installing/
+4. Install Docker Community Edition : https://docs.docker.com/install/
+5. Clone this repo: Run `git clone https://github.com/raghavp96/bluebikedata.git` on your terminal
+6. Use the script in the docs folder to create the database in your MySQL server (with a root connection)
+7. Install the Python `docker` package: Run `pip install docker` on your terminal (make sure your `pip` is for Python3)
+8. Go to the `auth` folder and rename each `template-*.json` file to `role-*.json` - place the appropriate information in each JSON
+9. In your terminal, ensure you are in the root directory of the project (where this README is). Run `make start`
+10. In your browser, visit:
+	- http://localhost:8001/, and
+	- http://localhost:8001/query/select%20*%20from%20station,
+
+	where you should see jsons displayed on the page
+11. Run `make stop` to stop all containers
+	

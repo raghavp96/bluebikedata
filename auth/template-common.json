@@ -1,0 +1,5 @@
+{
+    "host" : "[MySQL SERVER HOST IP]",
+    "db" : "[Database Name]",
+    "charset" : "utf8mb4 [or other charset]"
+}
