@@ -10,12 +10,13 @@ create table if not exists station (
     latitude decimal(10) not null,
     longitude decimal(10) not null,
     short_name varchar(50) not null,
-    rental_methods enum('CREDITCARD', 'KEY') not null,
+    rental_methods enum('CREDITCARD', 'KEY','BOTH') not null,
     capacity int not null,
     rental_id varchar(100) not null,
     eightd_has_key_dispenser tinyint(2) not null,
     has_kiosk tinyint(2) not null
 );
+
 
 create table if not exists trip (
 	trip_id int primary key not null,
@@ -48,5 +49,8 @@ create table if not exists station_status (
     foreign key (station_id) references station(station_id)    
 );
 
+insert into station values
+(67, "MIT at Mass Ave / Amherst St", 42.3581,71.093198,"M23006", "CREDITCARD", 27,"https://www.bluebikes.com/app?station_id=67",true,true);
+select * from station;
 -- Error Code: 1068. Multiple primary key defined
 
