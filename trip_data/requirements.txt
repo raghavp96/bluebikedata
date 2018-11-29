@@ -1,3 +1,5 @@
 flask
-csv]
+csv
 json
+jsonify
+requirements
