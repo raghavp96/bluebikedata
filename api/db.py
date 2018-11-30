@@ -7,6 +7,15 @@ def __get_connection(role):
     auth_svc_port = "8080"
     auth_svc_endpoint = "/"
 
+    # For local testing run make start - stop this container only
+    # Uncomment the following details and comment the above:
+
+    # auth_svc_address = "http://localhost"
+    # auth_svc_port = "8000"
+    # auth_svc_endpoint = "/"
+
+    # and then run `python app.py`
+
     credentials = requests.get(auth_svc_address +  ":" + auth_svc_port + auth_svc_endpoint + role).json()
     return pymysql.connect(
         host=credentials["host"],

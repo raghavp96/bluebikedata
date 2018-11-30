@@ -1,8 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from db import queryDB, mutateDB
 
 import simplejson
 import json
+
+from dao import Station, StationStatus, Trip
 
 app = Flask(__name__)
 
@@ -60,6 +62,35 @@ def mutate(querySQL, role="default"):
         result["result"] = "Only INSERT queries are allowed"
 
     return jsonify(json.loads(simplejson.dumps(result)))
+
+
+# REST Way
+@app.route('/station', methods=['GET', 'POST'])
+def query_station(role="default"):
+    if request.method == 'GET':
+        return jsonify(Station().doGet(request.args, role))
+    # elif request.method == 'POST':
+    #     return station.doPost(entity, role, request)
+    else:
+        return "NOT SUPPORTED"
+
+# @app.route('/station_status', methods=['GET', 'POST'])
+# def query_station_status(entity, role="default"):
+#     if request.method == 'GET':
+#         return station_status.doGet(entity, role, request.args)
+#     elif request.method == 'POST':
+#         return station_status.doPost(entity, role, request)
+#     else:
+#         return "NOT SUPPORTED"
+
+# @app.route('/trip', methods=['GET', 'POST'])
+# def query_trip(entity, role="default"):
+#     if request.method == 'GET':
+#         trip.doGet(entity, role, request.args)
+#     elif request.method == 'POST':
+#         trip.doPost(entity, role, request)
+#     else:
+#         return "NOT SUPPORTED"
 
 
 if __name__ == '__main__':
