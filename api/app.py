@@ -4,7 +4,7 @@ from db import queryDB, mutateDB
 import simplejson
 import json
 
-from dao import Station, StationStatus, Trip
+from dao import doGet
 
 app = Flask(__name__)
 
@@ -35,63 +35,57 @@ def hello_world():
     }
     return jsonify(info)
 
-@app.route('/query/<querySQL>')
-@app.route('/query/<querySQL>/<role>')
-def query(querySQL, role="default"):
+@app.route('/station_status/latest', methods=['GET'])
+def query_latest_station_status(role="default"):
+    station_statuses = doGet("station_status", request.args, role)["station_statuses"]
     result = {}
-    resultsArray = []
-    querySQL = querySQL.replace("%20", " ")
-
-    if (querySQL.startswith("select")):
-        result["result"] = queryDB(querySQL, role)
-    else:
-        resultsArray.append("Only SELECT queries are allowed") 
-        result["result"] = resultsArray
-
-    return jsonify(json.loads(simplejson.dumps(result, use_decimal=True)))
-
-@app.route('/mutate/<querySQL>')
-@app.route('/mutate/<querySQL>/<role>')
-def mutate(querySQL, role="default"):
-    result = {}
-    querySQL = querySQL.replace("%20", " ")
-
-    if (querySQL.startswith("insert")):
-        result["result"] = mutateDB(querySQL, role)
-    else:
-        result["result"] = "Only INSERT queries are allowed"
-
-    return jsonify(json.loads(simplejson.dumps(result)))
+    for idx, obj in enumerate(station_statuses):
+        if idx == len(station_statuses) - 1:
+            result["station_statuses"] = obj
+    result["station_statuses"] = []
+    
+    return jsonify(result) 
 
 
-# REST Way
-@app.route('/station', methods=['GET', 'POST'])
-def query_station(role="default"):
+@app.route('/<entity>', methods=['GET', 'POST'])
+def query_entity(entity, role="default"):
     if request.method == 'GET':
-        return jsonify(Station().doGet(request.args, role))
+        return jsonify(doGet(entity, request.args, role))
     # elif request.method == 'POST':
     #     return station.doPost(entity, role, request)
     else:
         return "NOT SUPPORTED"
 
-# @app.route('/station_status', methods=['GET', 'POST'])
-# def query_station_status(entity, role="default"):
-#     if request.method == 'GET':
-#         return station_status.doGet(entity, role, request.args)
-#     elif request.method == 'POST':
-#         return station_status.doPost(entity, role, request)
-#     else:
-#         return "NOT SUPPORTED"
+# Removing the ability for users to inject SQL into browser
+# Unsafe operation - not RESTful
 
-# @app.route('/trip', methods=['GET', 'POST'])
-# def query_trip(entity, role="default"):
-#     if request.method == 'GET':
-#         trip.doGet(entity, role, request.args)
-#     elif request.method == 'POST':
-#         trip.doPost(entity, role, request)
-#     else:
-#         return "NOT SUPPORTED"
+# @app.route('/query/<querySQL>')
+# @app.route('/query/<querySQL>/<role>')
+# def query(querySQL, role="default"):
+#     result = {}
+#     resultsArray = []
+#     querySQL = querySQL.replace("%20", " ")
 
+#     if (querySQL.startswith("select")):
+#         result["result"] = queryDB(querySQL, role)
+#     else:
+#         resultsArray.append("Only SELECT queries are allowed") 
+#         result["result"] = resultsArray
+
+#     return jsonify(json.loads(simplejson.dumps(result, use_decimal=True)))
+
+# @app.route('/mutate/<querySQL>')
+# @app.route('/mutate/<querySQL>/<role>')
+# def mutate(querySQL, role="default"):
+#     result = {}
+#     querySQL = querySQL.replace("%20", " ")
+
+#     if (querySQL.startswith("insert")):
+#         result["result"] = mutateDB(querySQL, role)
+#     else:
+#         result["result"] = "Only INSERT queries are allowed"
+
+#     return jsonify(json.loads(simplejson.dumps(result)))
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=8080)

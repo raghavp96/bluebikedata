@@ -36,8 +36,8 @@
     - `is_installed=[boolean]`,
     - `is_rented=[boolean]`,
     - `is_returning=[boolean]`,
-    <!-- (- `last_reported datetime not null`,)-->
-    - `has_available_keys=[boolean]`
+    <!-- (- `last_reported datetime=[long integer]`,)-->
+    - `eightd_has_available_keys=[boolean]`
 
 * **Data Params**
 
@@ -57,7 +57,7 @@
           "is_rented"  : [boolean],
           "is_returning"  : [boolean],
           "last_reported" [long integer],
-          "has_available_keys"  : [boolean]
+          "eightd_has_available_keys"  : [boolean]
       }
   }
   ```
@@ -78,7 +78,7 @@
               "is_installed"  : [boolean],
               "is_rented"  : [boolean],
               "is_returning"  : [boolean],
-              "last_reported" [long integer],"has_available_keys"  : [boolean]
+              "last_reported" [long integer],"eightd_has_available_keys"  : [boolean]
           },
           ...
           {
@@ -92,7 +92,7 @@
               "is_installed"  : [boolean],
               "is_rented"  : [boolean],
               "is_returning"  : [boolean],
-              "last_reported" [long integer],"has_available_keys"  : [boolean]
+              "last_reported" [long integer],"eightd_has_available_keys"  : [boolean]
           }
       ]
   }

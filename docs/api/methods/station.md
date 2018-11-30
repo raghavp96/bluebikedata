@@ -24,15 +24,15 @@
 
    **Optional:**
  
-   - `id=[integer]`,
-   - `name=[alphanumeric]`,
+   - `station_id=[integer]`,
+   - `station_name=[alphanumeric]`,
    - `latitude=[double/float]`,
    - `longitude=[double/float]`,
    - `short_name=[alphanumeric]`,
    - `rental_methods=[stringone of 'CREDITCARD', 'KEY', 'BOTH']`,
    - `capacity=[integer]`,
    - `rental_id=[alphanumeric]`,
-   - `has_key_dispenser=[boolean]`,
+   - `eightd_has_key_dispenser=[boolean]`,
    - `has_kiosk=[boolean]`
 
 
@@ -43,15 +43,15 @@
   ```
   {
       "station" : {
-          "id" : [integer],
-          "name" : [alphanumeric],
+          "station_id" : [integer],
+          "station_name" : [alphanumeric],
           "latitude" : [double/float],
           "longitude" : [double/float],
           "short_name" : [alphanumeric],
           "rental_methods" : [one of 'CREDITCARD', 'KEY', 'BOTH'],
           "capacity" : [integer],
           "rental_id" : [alphanumeric],
-          "has_key_dispenser" : [boolean],
+          "eightd_has_key_dispenser" : [boolean],
           "has_kiosk" : [boolean]
       }
   }
@@ -63,28 +63,28 @@
   {
       "stations" : [
           {
-              "id" : [integer],
-              "name" : [alphanumeric],
+              "station_id" : [integer],
+              "station_name" : [alphanumeric],
               "latitude" : [double/float],
               "longitude" : [double/float],
               "short_name" : [alphanumeric],
               "rental_methods" : [one of 'CREDITCARD', 'KEY', 'BOTH'],
               "capacity" : [integer],
               "rental_id" : [alphanumeric],
-              "has_key_dispenser" : [boolean],
+              "eightd_has_key_dispenser" : [boolean],
               "has_kiosk" : [boolean]
           },
           ....
           {
-              "id" : [integer],
-              "name" : [alphanumeric],
+              "station_id" : [integer],
+              "station_name" : [alphanumeric],
               "latitude" : [double/float],
               "longitude" : [double/float],
               "short_name" : [alphanumeric],
               "rental_methods" : [one of 'CREDITCARD', 'KEY', 'BOTH'],
               "capacity" : [integer],
               "rental_id" : [alphanumeric],
-              "has_key_dispenser" : [boolean],
+              "eightd_has_key_dispenser" : [boolean],
               "has_kiosk" : [boolean]
           }
       ]

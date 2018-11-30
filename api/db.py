@@ -1,6 +1,8 @@
 import pymysql.cursors
 import requests
 
+# db.py: Connects and sends SQL queries to DB
+
 def __get_connection(role):
     # Don't hardcode 
     auth_svc_address = "http://auth_svc"
