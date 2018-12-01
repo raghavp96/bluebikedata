@@ -7,10 +7,10 @@ use bluebike;
 create table if not exists station (
 	station_id int primary key not null,
     station_name varchar(50) not null,
-    latitude decimal(10) not null,
-    longitude decimal(10) not null,
+    latitude decimal(24,20) not null, -- Allows for up to 20 digits to the right of the decimal point, 24 digits altogether
+    longitude decimal(24,20) not null,
     short_name varchar(50) not null,
-    rental_methods enum('CREDITCARD', 'KEY') not null,
+    rental_methods enum('CREDITCARD', 'KEY', 'BOTH') not null,
     capacity int not null,
     rental_id varchar(100) not null,
     eightd_has_key_dispenser tinyint(2) not null,
