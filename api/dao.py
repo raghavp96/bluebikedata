@@ -2,10 +2,13 @@ from db import queryDB, mutateDB
 from formatter import formatStationAttributeValue, formatStationStatusAttributeValue, formatTripAttributeValue
 from formatter import reverseformatStationAttributeValue, reverseFormatStationStatusAttributeValue, reverseFormatTripAttributeValue
 
-# dao.py: Transforms GET/POST requests into appropriate SQL queries and sends to db.py
+# dao.py: Transforms GET/POST requests into appropriate SQL queries and 
+# sends to db.py
 #  - Public Methods: doGet and doPost
 
-# The entity map allows us to write more generic code, agnostic of what entity we're actually dealing with
+# The entity map allows us to write more generic code, agnostic of what 
+# entity we're actually dealing with
+
 entityMap = {
     "station": {
         "tableName": "station",
@@ -64,7 +67,8 @@ entityMap = {
     }
 }
 
-# Converts GET request into appropriate SELECT and queries DB, returning a dict with results array
+# Converts GET request into appropriate SELECT and queries DB, returning a 
+# dict with results array
 
 
 def doGet(entity, request_args, role="default"):
@@ -76,13 +80,15 @@ def doGet(entity, request_args, role="default"):
         select_statement = __construct_select(
             request_args, entityDict["tableName"], entityDict["formatter"])
         result[entityDict["entityPlural"]] = queryDB(select_statement, role)
-        # result[entityDict["entityPlural"]] = reverseFormatJSON(queryDB(select_statement, role))
+        # result[entityDict["entityPlural"]] = reverseFormatJSON(
+        #     queryDB(select_statement, role))
     else:
         result["error"] = "Unknown entity"
 
     return result
 
-# Converts POST request into appropriate INSERT and queries DB, returning a dict with a success message
+# Converts POST request into appropriate INSERT and queries DB, returning a 
+# dict with a success message
 
 
 def doPost(entity, request_json_data, role="default"):
@@ -98,11 +104,19 @@ def doPost(entity, request_json_data, role="default"):
             try:
                 if isSingleInsert(request_json_data, entity):
                     insert_statement += __construct_insert(
-                        request_json_data, entityDict["tableName"], entityDict["formatter"], entityDict["columnOrderings"], False, entity)
+                        request_json_data, 
+                        entityDict["tableName"], 
+                        entityDict["formatter"], 
+                        entityDict["columnOrderings"], 
+                        False, entity)
                 else:
                     insert_statement += __construct_insert(
-                        request_json_data, entityDict["tableName"], entityDict["formatter"], entityDict["columnOrderings"], True, entityDict["entityPlural"])
-                print("Insert Statement : " + insert_statement)
+                        request_json_data, 
+                        entityDict["tableName"], 
+                        entityDict["formatter"], 
+                        entityDict["columnOrderings"], 
+                        True, entityDict["entityPlural"])
+                
                 result[entityDict["entityPlural"]] = mutateDB(
                     insert_statement, role)
             except KeyError as err:
@@ -113,7 +127,8 @@ def doPost(entity, request_json_data, role="default"):
     return result
 
 
-# Constructs a valid SELECT statment for an entity, with the given arguments in `request_args`
+# Constructs a valid SELECT statment for an entity, with the given arguments 
+# in `request_args`
 def __construct_select(request_args, entity_table_name, formatterFunc):
     query = "select * from " + entity_table_name
 
@@ -133,9 +148,9 @@ def __construct_select(request_args, entity_table_name, formatterFunc):
 
     return query
 
-# Given an entity name looks at the JSON data if either the entityName or its plural form are there.
 
-
+# Given an entity name looks at the JSON data if either the entityName or its 
+# plural form are there.
 def isSingleInsert(request_json_data, entity_name):
     try:
         request_json_data[entity_name]
@@ -148,8 +163,11 @@ def isSingleInsert(request_json_data, entity_name):
             raise err
 
 
-# Constructs a valid INSERT statment for an entity, with the given arguments in `request_args`
-def __construct_insert(request_json_data, entity_table_name, formatterFunc, columnOrderings, isMultiple, entry_data_key):
+# Constructs a valid INSERT statment for an entity, with the given arguments in 
+# `request_args`
+def __construct_insert(
+    request_json_data, entity_table_name, formatterFunc, columnOrderings, 
+    isMultiple, entry_data_key):
     query = "insert into " + entity_table_name + " values "
 
     if not isMultiple:

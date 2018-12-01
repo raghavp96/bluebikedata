@@ -2,99 +2,91 @@ import datetime
 
 
 def formatStationAttributeValue(keyName, value):
-    return str({
-        "station_id": value,
-        "station_name": ("'" + str(value) + "'"),
-        "latitude": value,
-        "longitude": value,
-        "short_name": ("'" + str(value) + "'"),
-        "rental_methods": ("'" + str(value) + "'"),
-        "capacity": value,
-        "rental_id": ("'" + str(value) + "'"),
-        "eightd_has_key_dispenser": __convertBool(value),
-        "has_kiosk": __convertBool(value)
-    }[keyName])
+    if keyName in ["station_id", "latitude", "longitude", "capacity"]:
+        return str(value)
+    elif keyName in ["station_name", "short_name", "rental_methods", "rental_id"]:
+        return ("'" + str(value) + "'")
+    elif keyName in ["eightd_has_key_dispenser", "has_kiosk"]:
+        return __convertBool(value)
+    else:
+        return str(value)
 
 
 def reverseformatStationAttributeValue(keyName, value):
-    return str({
-        "station_id": value,
-        "station_name": value,
-        "latitude": value,
-        "longitude": value,
-        "short_name": value,
-        "rental_methods": value,
-        "capacity": value,
-        "rental_id": value,
-        "eightd_has_key_dispenser": __revConvertBool(value),
-        "has_kiosk": __revConvertBool(value)
-    }[keyName])
+    if keyName in ["station_id", "latitude", "longitude", "capacity"]:
+        return value
+    elif keyName in ["station_name", "short_name", "rental_methods", "rental_id"]:
+        return value
+    elif keyName in ["eightd_has_key_dispenser", "has_kiosk"]:
+        return __revConvertBool(value)
+    else:
+        return value
 
 
 def formatStationStatusAttributeValue(keyName, value):
-    return str({
-        "station_status_id": value,
-        "station_id": value,
-        "num_bikes_available": value,
-        "num_ebikes_available": value,
-        "num_bikes_disabled": value,
-        "num_docks_available": value,
-        "num_dock_disabled": value,
-        "is_installed": __convertBool(value),
-        "is_rented": __convertBool(value),
-        "is_returning": __convertBool(value),
-        "last_reported": __convertSecToTime(value),
-        "eightd_has_available_keys": __convertBool(value)
-    }[keyName])
+    if keyName in [
+        "station_status_id", "station_id", "num_bikes_available", 
+        "num_ebikes_available", "num_bikes_disabled", "num_docks_available", 
+        "num_dock_disabled"]:
+        return value
+    elif keyName in [
+        "is_installed", "is_rented", "is_returning", 
+        "eightd_has_available_keys"]:
+        return __convertBool(value)
+    elif keyName in ["last_reported"]:
+        return __convertSecToTime(value)
+    else:
+        return value
 
 
 def reverseFormatStationStatusAttributeValue(keyName, value):
-    return str({
-        "station_status_id": value,
-        "station_id": value,
-        "num_bikes_available": value,
-        "num_ebikes_available": value,
-        "num_bikes_disabled": value,
-        "num_docks_available": value,
-        "num_dock_disabled": value,
-        "is_installed": __revConvertBool(value),
-        "is_rented": __revConvertBool(value),
-        "is_returning": __revConvertBool(value),
-        "last_reported": value,
-        "eightd_has_available_keys": __revConvertBool(value)
-    }[keyName])
+    if keyName in [
+        "station_status_id", "station_id", "num_bikes_available", 
+        "num_ebikes_available", "num_bikes_disabled", "num_docks_available", 
+        "num_dock_disabled", "last_reported"]:
+        return value
+    elif keyName in [
+        "is_installed", "is_rented", "is_returning", 
+        "eightd_has_available_keys"]:
+        return __revConvertBool(value)
+    elif keyName in keyName in ["last_reported"]:
+        return value
+    else:
+        return value
 
 
 def formatTripAttributeValue(keyName, value):
-    return str({
-        "trip_id": value,
-        "bike_id": value,
-        "start_time": __convertSecToTime(value),
-        "end_time": __convertSecToTime(value),
-        "usertype": ("'" + str(value) + "'"),
-        "birthyear": value,
-        "gender": __convertGenderToId(value),
-        "start_station": value,
-        "stop_station": value
-    }[keyName])
+    if keyName in [
+        "trip_id", "bike_id", "birthyear", "start_station", 
+        "stop_station"]:
+        return value
+    elif keyName in ["start_time", "end_time"]:
+        return __convertSecToTime(value)
+    elif keyName in ["usertype"]:
+        return ("'" + str(value) + "'")
+    elif keyName in ["gender"]:
+        __convertGenderToId(value)
+    else:
+        return value
 
 
 def reverseFormatTripAttributeValue(keyName, value):
-    return str({
-        "trip_id": value,
-        "bike_id": value,
-        "start_time": value,
-        "end_time": value,
-        "usertype": value,
-        "birthyear": value,
-        "gender": __revConvertGender(value),
-        "start_station": value,
-        "stop_station": value
-    }[keyName])
+    if keyName in [
+        "trip_id", "bike_id", "birthyear", "start_station", 
+        "stop_station"]:
+        return value
+    elif keyName in ["start_time", "end_time"]:
+        return value
+    elif keyName in ["usertype"]:
+        return value
+    elif keyName in ["gender"]:
+        return __revConvertGender(value)
+    else:
+        return value
 
 
 def __convertBool(val):
-    if val == "true" or "1":
+    if val == "true" or val == 1:
         return "TRUE"
     else:
         return "FALSE"
