@@ -45,7 +45,7 @@
 
   ```
   {
-      "status" : {
+      "station_status" : {
           "station_status_id"  : [integer],
           "station_id"  : [integer],
           "num_bikes_available"  : [integer],
@@ -66,7 +66,7 @@
 
   ```
   {
-      "statuses" : [
+      "station_statuses" : [
           {
               "station_status_id"  : [integer],
               "station_id"  : [integer],

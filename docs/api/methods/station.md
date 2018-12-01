@@ -124,7 +124,10 @@ for multiple stations.
 
 *   **Sample Call:**
 
-  <!--<_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> -->
+A sample POST request from the terminal might look like:
+  ```
+  curl -d '{ "stations" : [{ "capacity": 20, "eightd_has_key_dispenser": "false", "has_kiosk": "true", "latitude": 42.999999, "longitude": -71.121212, "rental_id": "https://www.bluebikes.com/app?station_id=202", "rental_methods": "CREDITCARD", "short_name": "B320sdfd122121212",  "station_id": 202, "station_name": "FakeStationA"}]}' -H "Content-Type: application/json" -X POST "http://localhost:8001/station/data-creator/"
+  ```
 
 *   **Notes:**
 

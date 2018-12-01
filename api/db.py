@@ -3,8 +3,9 @@ import requests
 
 # db.py: Connects and sends SQL queries to DB
 
+
 def __get_connection(role):
-    # Don't hardcode 
+    # Don't hardcode
     auth_svc_address = "http://auth_svc"
     auth_svc_port = "8080"
     auth_svc_endpoint = "/"
@@ -18,7 +19,8 @@ def __get_connection(role):
 
     # and then run `python app.py`
 
-    credentials = requests.get(auth_svc_address +  ":" + auth_svc_port + auth_svc_endpoint + role).json()
+    credentials = requests.get(
+        auth_svc_address + ":" + auth_svc_port + auth_svc_endpoint + role).json()
     return pymysql.connect(
         host=credentials["host"],
         db=credentials["db"],
@@ -26,6 +28,7 @@ def __get_connection(role):
         user=credentials["user"],
         password=credentials["password"],
         cursorclass=pymysql.cursors.DictCursor)
+
 
 def queryDB(querySQL, role="default"):
     connection = __get_connection(role)
@@ -37,12 +40,13 @@ def queryDB(querySQL, role="default"):
 
             for result_item in resultset:
                 resultsArray.append(result_item)
-                
-    except: #Error as err:
-        return "An Error Occurred:" # + err
+
+    except:  # Error as err:
+        return "An Error Occurred:"  # + err
     finally:
         connection.close()
         return resultsArray
+
 
 def mutateDB(querySQL, role="default"):
     connection = __get_connection(role)
@@ -50,8 +54,8 @@ def mutateDB(querySQL, role="default"):
         with connection.cursor() as cursor:
             cursor.execute(querySQL)
             connection.commit()
-    except: #Error as err:
-        return "An Error Occurred:" # + err
+    except:  # Error as err:
+        return "An Error Occurred:"  # + err
     finally:
         connection.close()
         return "Done"
