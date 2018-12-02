@@ -18,10 +18,10 @@ def read_csv():
             result.get("trips").append(row)
         # remove header row
         result.get("trips").pop(0)
-        result = json.dumps(result)
-        result= json.loads(result)
-        trip_data.intoSQL(result)
-        #return result
+        result2 = json.dumps(result)
+        result2= json.loads(result2)
+        trip_data.intoSQL(result2)
+        return jsonify(result)
 
 
 

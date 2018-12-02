@@ -9,9 +9,10 @@ def intoSQL(trips):
                     "gender, " + 
                     "start_station, " + 
                     "stop_station) values ")
+    id=0
     for trip in trips["trips"]:
         insert_query += ("(" +
-                        str("123") + "," +
+                        str(id) + "," +
                         str(trip["bikeid"]) + "," +
                         str(trip["starttime"]) + "," +
                         str(trip["stoptime"]) + "," +
@@ -19,7 +20,8 @@ def intoSQL(trips):
                         str(trip["birthyear"]) + "," +
                         str(trip["gender"]) + "," +
                         str(trip["start_station_id"]) + "," +
-                        str(trip["end_station_id"]) + ")")
+                        str(trip["end_station_id"]) + "),\n")
+        id=id+1
 
     
     with open("trip_data.txt", "a") as f:
