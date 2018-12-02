@@ -116,7 +116,7 @@ def doPost(entity, request_json_data, role="default"):
                         entityDict["formatter"], 
                         entityDict["columnOrderings"], 
                         True, entityDict["entityPlural"])
-                
+
                 result[entityDict["entityPlural"]] = mutateDB(
                     insert_statement, role)
             except KeyError as err:
@@ -201,7 +201,7 @@ def __insertOneRow(one_entity, formatterFunc, columnOrderings):
         if ind == len(columnOrderings) - 1:
             query += formatterFunc(key, one_entity[key])
         else:
-            query += formatterFunc(key, one_entity[key]) + ", "
+            query += formatterFunc(key, one_entity[key]) + ", "    
     query += ")"
 
     return query

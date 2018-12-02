@@ -18,9 +18,9 @@ def __get_connection(role):
     # auth_svc_endpoint = "/"
 
     # and then run `python app.py`
-
     credentials = requests.get(
         auth_svc_address + ":" + auth_svc_port + auth_svc_endpoint + role).json()
+
     return pymysql.connect(
         host=credentials["host"],
         db=credentials["db"],
@@ -41,8 +41,9 @@ def queryDB(querySQL, role="default"):
             for result_item in resultset:
                 resultsArray.append(result_item)
 
-    except:  # Error as err:
-        return "An Error Occurred:"  # + err
+    except pymysql.err.ProgrammingError as except_detail:
+        connection.close()
+        return("pymysql.err.ProgrammingError: «{}»".format(except_detail))
     finally:
         connection.close()
         return resultsArray
@@ -54,8 +55,9 @@ def mutateDB(querySQL, role="default"):
         with connection.cursor() as cursor:
             cursor.execute(querySQL)
             connection.commit()
-    except:  # Error as err:
-        return "An Error Occurred:"  # + err
+    except pymysql.err.ProgrammingError as except_detail:
+        connection.close()
+        return("pymysql.err.ProgrammingError: «{}»".format(except_detail))
     finally:
         connection.close()
         return "Done"
