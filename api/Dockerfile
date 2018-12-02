@@ -6,8 +6,9 @@ RUN apk add -U --no-cache gcc build-base linux-headers ca-certificates \
 COPY requirements.txt /
 RUN pip install -r requirements.txt
 
-COPY app.py /
-COPY db.py /
+# COPY app.py /
+# COPY db.py /
+COPY *.py /
 
 RUN ls -la
 

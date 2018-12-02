@@ -3,7 +3,7 @@ import requests
 station_status_url = "https://gbfs.bluebikes.com/gbfs/en/station_status.json"
 
 def poll(incomplete_url, role):
-    new_station_status_id = get_last_station_status_id(incomplete_url, role) + 1
+    # new_station_status_id = get_last_station_status_id(incomplete_url, role) + 1
     
     station_statuses = get_station_statuses()
     insert_query = ("insert into station_status ( " + 
@@ -37,12 +37,12 @@ def poll(incomplete_url, role):
 
     insert_query = insert_query[:-2] + ";" 
 
-    # with open("station_statuses.txt", "a") as f:
-    #     # replace the last comma with a semicolon
-    #     f.write(insert_query)
+    with open("station_statuses.txt", "a") as f:
+        # replace the last comma with a semicolon
+        f.write(insert_query)
 
-    complete_get_id_url = incomplete_url + "/mutate/" + insert_query + "/" + role
-    return requests.get(complete_get_id_url)
+    # complete_get_id_url = incomplete_url + "/mutate/" + insert_query + "/" + role
+    # return requests.get(complete_get_id_url)
 
 def get_last_station_status_id(incomplete_url, role):
     get_id_query = "select station_status_id from station_status"
