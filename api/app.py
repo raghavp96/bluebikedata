@@ -34,17 +34,30 @@ def hello_world():
     return jsonify(info)
 
 
+@app.route('/station_status/latest_id', methods=['GET'])
+def query_latest_station_status_id(role="default"):
+    # ignores request.args
+    station_statuses = doGet("station_status", {}, role)[
+        "station_statuses"]
+
+    latest_station_status_id = 0 if len(
+        station_statuses) == 0 else station_statuses[-1]["station_status_id"]
+
+    return jsonify({ "latest_station_status_id" : latest_station_status_id })
+
+
 @app.route('/station_status/latest', methods=['GET'])
 def query_latest_station_status(role="default"):
     station_statuses = doGet("station_status", request.args, role)[
         "station_statuses"]
-    result = {}
-    for idx, obj in enumerate(station_statuses):
-        if idx == len(station_statuses) - 1:
-            result["station_statuses"] = obj
-    result["station_statuses"] = []
 
-    return jsonify(result)
+    last_station_status_id = 0 if len(
+        station_statuses) == 0 else station_statuses[-1]["station_status_id"]
+
+    args = dict(request.args)
+    args["station_status_id"] = last_station_status_id
+
+    return jsonify(doGet("station_status", args, role)["station_statuses"])
 
 
 @app.route('/<entity>', methods=['GET'])

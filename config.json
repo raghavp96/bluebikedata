@@ -13,6 +13,12 @@
                 "Name" : "api_svc",
                 "ExternalPort" : "8001",
                 "Port" : "8080"
+            },
+            {
+                "Folder" : "live_data",
+                "Name" : "live_data_svc",
+                "ExternalPort" : "8002",
+                "Port" : "8080"
             }
         ]
     } 
