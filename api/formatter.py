@@ -5,6 +5,8 @@ def formatStationAttributeValue(keyName, value):
     if keyName in ["station_id", "latitude", "longitude", "capacity"]:
         return str(value)
     elif keyName in ["station_name", "short_name", "rental_methods", "rental_id"]:
+        if keyName == "station_name":
+            value = value.replace("'", "''")
         return ("'" + str(value) + "'")
     elif keyName in ["eightd_has_key_dispenser", "has_kiosk"]:
         return __convertBool(value)

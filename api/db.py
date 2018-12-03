@@ -55,9 +55,8 @@ def mutateDB(querySQL, role="default"):
         with connection.cursor() as cursor:
             cursor.execute(querySQL)
             connection.commit()
+        connection.close()
+        return "Done"
     except pymysql.err.ProgrammingError as except_detail:
         connection.close()
         return("pymysql.err.ProgrammingError: «{}»".format(except_detail))
-    finally:
-        connection.close()
-        return "Done"

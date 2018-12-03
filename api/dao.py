@@ -117,6 +117,8 @@ def doPost(entity, request_json_data, role="default"):
                         entityDict["columnOrderings"], 
                         True, entityDict["entityPlural"])
 
+                # return insert_statement
+                
                 result[entityDict["entityPlural"]] = mutateDB(
                     insert_statement, role)
             except KeyError as err:
