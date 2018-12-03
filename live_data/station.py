@@ -1,39 +1,39 @@
 import requests
 
-station_url = "https://gbfs.bluebikes.com/gbfs/en/station_information.json"
+gbfs_station_url = "https://gbfs.bluebikes.com/gbfs/en/station_information.json"
+api_svc_role = "data-creator"
 
-# Don't hardcode
-# api_svc_address = "http://api_svc"
-# api_svc_port = "8080"
-# api_svc_endpoint = "/"
 
-# For local testing run make start - stop this container only
-# Uncomment the following details and comment the above:
-
-api_svc_address = "http://localhost"
-api_svc_port = "8001"
-api_svc_endpoint = "/"
-
-api_svc_url= api_svc_address + ":" + api_svc_port + api_svc_endpoint
-
-def poll():
-
+def poll(api_svc_url):
     post_data = {}
-    post_data["stations"] = get_station_information()
+    post_data["stations"] = __get_latest_station_information()
 
-    print(post_data)
+    current_station_infos = __get_current_station_info(api_svc_url)
+    current_station_ids = [station["station_id"]
+                           for station in current_station_infos if "station_id" in station]
+
+    new_post_data = {}
+    new_post_data["stations"] = []
 
     for station in post_data["stations"]:
-        station = transform(station)
-  
-    return requests.post(api_svc_url + "station/data-creator/", json=post_data)
+        if int(station["station_id"]) not in current_station_ids:
+            new_post_data["stations"].append(__transform(station))
 
-def transform(station):
+    if new_post_data["stations"] == []:
+        return "No new stations to insert!"
+    else:
+        result = requests.post(api_svc_url + "station/" +
+                               api_svc_role + "/", json=new_post_data)
+        return ("API Response Code: ", result.status_code, "\n",
+                "API Response: ", result.text)
+
+
+def __transform(station):
     temp = station
     temp["station_name"] = station["name"]
     temp["latitude"] = station["lat"]
     temp["longitude"] = station["lon"]
-    temp["rental_id"]  = station["rental_url"]
+    temp["rental_id"] = station["rental_url"]
 
     if station["rental_methods"] == ["KEY"]:
         temp["rental_methods"] = "KEY"
@@ -44,14 +44,13 @@ def transform(station):
 
     return temp
 
-def get_stations():
+
+def __get_current_station_info(api_svc_url):
     url = api_svc_url + "station"
 
     stations = requests.get(url).json()["stations"]
     return stations
 
-def get_station_information():
-    return requests.get(station_url).json()["data"]["stations"]
 
-poll_result = poll()
-print(poll_result.text)
+def __get_latest_station_information():
+    return requests.get(gbfs_station_url).json()["data"]["stations"]
