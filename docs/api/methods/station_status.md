@@ -13,8 +13,6 @@
   `/station_status?parameter1=[val1]&parameter2=[val2]&...&parameterN=[valN]`
 
 * **Method:**
-  
-  <_The request type_>
 
   `GET` | `POST`
   
@@ -129,3 +127,45 @@ for the status data for multiple stations.
 * **Notes:**
 
  <!-- <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>  -->
+
+----
+
+ **Show the Last Station Status ID**
+----
+  Returns JSON data containing the last used id for station_status.
+
+* **URL**
+
+  `/station_status/latest_id`
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+ 
+   No parameters necessary .
+
+* **Success Response:**
+  
+  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
+
+  * **Code:** 200 <br />
+    **Content:** `{ "latest_station_status_id" : [a number] }`
+ 
+@TODO - Error Responses, Sample Call, Notes
+
+* **Error Response:**
+
+
+* **Sample Call:**
+
+```
+curl "http://localhost:8001/station_status/latest_id
+```
+
+* **Notes:**
+
+ <!-- <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>  -->
+
+ 
