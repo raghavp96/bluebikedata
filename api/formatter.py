@@ -5,6 +5,8 @@ def formatStationAttributeValue(keyName, value):
     if keyName in ["station_id", "latitude", "longitude", "capacity"]:
         return str(value)
     elif keyName in ["station_name", "short_name", "rental_methods", "rental_id"]:
+        if keyName == "station_name":
+            value = value.replace("'", "''")
         return ("'" + str(value) + "'")
     elif keyName in ["eightd_has_key_dispenser", "has_kiosk"]:
         return __convertBool(value)
@@ -28,7 +30,7 @@ def formatStationStatusAttributeValue(keyName, value):
         "station_status_id", "station_id", "num_bikes_available", 
         "num_ebikes_available", "num_bikes_disabled", "num_docks_available", 
         "num_dock_disabled"]:
-        return value
+        return str(value)
     elif keyName in [
         "is_installed", "is_rented", "is_returning", 
         "eightd_has_available_keys"]:
@@ -36,7 +38,7 @@ def formatStationStatusAttributeValue(keyName, value):
     elif keyName in ["last_reported"]:
         return __convertSecToTime(value)
     else:
-        return value
+        return str(value)
 
 
 def reverseFormatStationStatusAttributeValue(keyName, value):
@@ -59,7 +61,7 @@ def formatTripAttributeValue(keyName, value):
     if keyName in [
         "trip_id", "bike_id", "birthyear", "start_station", 
         "stop_station"]:
-        return value
+        return str(value)
     elif keyName in ["start_time", "end_time"]:
         return __convertSecToTime(value)
     elif keyName in ["usertype"]:
@@ -67,7 +69,7 @@ def formatTripAttributeValue(keyName, value):
     elif keyName in ["gender"]:
         __convertGenderToId(value)
     else:
-        return value
+        return str(value)
 
 
 def reverseFormatTripAttributeValue(keyName, value):
@@ -86,7 +88,7 @@ def reverseFormatTripAttributeValue(keyName, value):
 
 
 def __convertBool(val):
-    if val == "true" or val == 1:
+    if val == "true" or val == 1 or val == True:
         return "TRUE"
     else:
         return "FALSE"
@@ -100,7 +102,7 @@ def __convertGenderToId(val):
 
 
 def __convertSecToTime(val):
-    return datetime.datetime.fromtimestamp(val)
+    return "'" + datetime.datetime.fromtimestamp(val).strftime("%Y-%m-%d %H:%M:%S") + "'"
 
 
 def __revRemoveSingleQuotes(val):
