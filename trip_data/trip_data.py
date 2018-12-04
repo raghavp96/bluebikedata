@@ -26,25 +26,15 @@ def default_convert_csv_to_json():
             row.move_to_end('trip_id', last=False)
             post_data.get("trips").append(row)
         
-        # remove header row
+    # remove header row
     post_data.get("trips").pop(0)
-    post_data = json.dumps(post_data)
-    post_data= json.loads(post_data)
-    return post_data
+    return requests.post(api_svc_url + "trip/data-creator/", json=json.dumps(post_data))
 
-def post_trips():
-    post_data=default_convert_csv_to_json()
-    r=requests.post(api_svc_url + "trip/data-creator/", json=post_data)
-    print(r.content)
+default_convert_csv_to_json()
 
-post_trips()
 
 @app.route('/csv', methods=['POST'])
 def upload_csv():
     return jsonify("To Do")
 
-
-
-if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0', port=8080)
     
