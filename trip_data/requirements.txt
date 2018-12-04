@@ -1,9 +1,6 @@
 flask
-<<<<<<< HEAD
 csv
 json
 jsonify
 requirements
-=======
 requests
->>>>>>> 9aa56906079b895b2783768962dd7fcbf81d5a4a
