@@ -30,7 +30,6 @@ def default_convert_csv_to_json():
     post_data.get("trips").pop(0)
     post_data = json.dumps(post_data)
     post_data= json.loads(post_data)
-    print(post_data)
     return post_data
 
 def post_trips():
