@@ -34,7 +34,7 @@ def hello_world():
     return jsonify(info)
 
 
-@app.route('/station_status/latest_id', methods=['GET'])
+@app.route('/station_status_latest_id', methods=['GET'])
 def query_latest_station_status_id(role="default"):
     # ignores request.args
     station_statuses = doGet("station_status", {}, role)[
@@ -44,6 +44,16 @@ def query_latest_station_status_id(role="default"):
         station_statuses) == 0 else station_statuses[-1]["station_status_id"]
 
     return jsonify({ "latest_station_status_id" : latest_station_status_id })
+
+
+@app.route('/trip_latest_id', methods=['GET'])
+def query_latest_trip_status_id(role="default"):
+    # ignores request.args
+    trips = doGet("trip", {}, role)["trips"]
+    latest_trip_id = 0 if len(
+        trips) == 0 else trips[-1]["trip_id"]
+
+    return jsonify({ "latest_trip_id" : latest_trip_id })
 
 
 @app.route('/station_status/latest', methods=['GET'])
