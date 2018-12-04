@@ -19,6 +19,12 @@
                 "Name" : "live_data_svc",
                 "ExternalPort" : "8002",
                 "Port" : "8080"
+            },
+            {
+                "Folder" : "trip_data",
+                "Name" : "data_svc",
+                "ExternalPort" : "8003",
+                "Port" : "8080"
             }
         ]
     } 

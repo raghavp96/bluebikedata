@@ -8,7 +8,7 @@ allowed_extensions = set(['csv'])
 renamed_csv_file = "data.csv"
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = dir_path + '/' + upload_folder
+app.config['UPLOAD_FOLDER'] = dir_path + '/' + upload_folder if dir_path != "/" else upload_folder
 
 def allowed_file(filename):
     if "." in filename:
