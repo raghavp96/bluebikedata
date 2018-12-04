@@ -26,10 +26,13 @@ def default_convert_csv_to_json():
             row.move_to_end('trip_id', last=False)
             post_data.get("trips").append(row)
         
+        
     # remove header row
-    post_data.get("trips").pop(0)
-    return requests.post(api_svc_url + "trip/data-creator/", json=json.dumps(post_data))
+    print('do')
+    r=requests.post(api_svc_url + "trip/data-creator/", json=json.dumps(post_data["trips"]))
+    print(r.content)
 
+    return r
 default_convert_csv_to_json()
 
 
