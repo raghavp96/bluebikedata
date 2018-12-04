@@ -1,5 +1,9 @@
 import datetime
 
+# TODO convert time to EST not UTC - I don't think it is UTC
+# TODO make sure male and female are right format - They probably are
+# TODO trip times are in proper format anyways, remove the convert to sec call
+
 
 def formatStationAttributeValue(keyName, value):
     if keyName in ["station_id", "latitude", "longitude", "capacity"]:
@@ -63,7 +67,8 @@ def formatTripAttributeValue(keyName, value):
         "stop_station"]:
         return str(value)
     elif keyName in ["start_time", "end_time"]:
-        return __convertSecToTime(value)
+        # return __convertSecToTime(value)
+        return ("'" + str(value) + "'")
     elif keyName in ["usertype"]:
         return ("'" + str(value) + "'")
     elif keyName in ["gender"]:

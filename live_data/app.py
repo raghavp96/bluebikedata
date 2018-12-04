@@ -12,12 +12,12 @@ polling_md_functions = [
     {
         "Name": "Station Status Poller",
         "PollingFunction": station_status.poll,
-        "Frequency": 10  # seconds
+        "Frequency": 600  # seconds, 10 minutes
     },
     {
         "Name": "Station Information Poller",
         "PollingFunction": station.poll,
-        "Frequency": 20  # seconds
+        "Frequency": 86400  # seconds, 24 hrs
     }
 ]
 
