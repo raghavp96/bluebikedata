@@ -72,7 +72,8 @@ def formatTripAttributeValue(keyName, value):
     elif keyName in ["usertype"]:
         return ("'" + str(value) + "'")
     elif keyName in ["gender"]:
-        __convertGenderToId(value)
+        # __revConvertGender(value)
+        return str(value)
     else:
         return str(value)
 
@@ -87,7 +88,7 @@ def reverseFormatTripAttributeValue(keyName, value):
     elif keyName in ["usertype"]:
         return value
     elif keyName in ["gender"]:
-        return __revConvertGender(value)
+        return __convertGenderToId(value)
     else:
         return value
 
@@ -100,10 +101,12 @@ def __convertBool(val):
 
 
 def __convertGenderToId(val):
-    if val == "F":
+    if val == "M":
         return 1
-    else:
+    elif val == "F":
         return 2
+    else:
+        return 0
 
 
 def __convertSecToTime(val):
@@ -126,9 +129,9 @@ def __revConvertBool(val):
 
 
 def __revConvertGender(val):
-    if val == 1:
+    if val == 1 or val == "1":
         return "M"
-    elif val == 2:
+    elif val == 2 or val == "2":
         return "F"
     else:
         return "U"

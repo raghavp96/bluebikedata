@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+import json
+
 from db import queryDB, mutateDB
 from formatter import formatStationAttributeValue, formatStationStatusAttributeValue, formatTripAttributeValue
 from formatter import reverseformatStationAttributeValue, reverseFormatStationStatusAttributeValue, reverseFormatTripAttributeValue
@@ -191,19 +195,23 @@ def __construct_insert(
                     query += __insertOneRow(entity,
                                             formatterFunc, columnOrderings)
                     query += ", "
-
             return query
         else:
             return ""
 
-
 def __insertOneRow(one_entity, formatterFunc, columnOrderings):
     query = "("
     for ind, key in enumerate(columnOrderings):
-        if ind == len(columnOrderings) - 1:
-            query += formatterFunc(key, one_entity[key])
+        originalValye = one_entity[key]
+        if originalValye is None or originalValye == "":
+            raise ValueError("original key:" + key + " led to None or empty type")
+        resultantValue = formatterFunc(key, one_entity[key])
+        if resultantValue is None or resultantValue == "":
+            raise ValueError("formatting key:" + key + " led to None or empty type")
         else:
-            query += formatterFunc(key, one_entity[key]) + ", "    
-    query += ")"
+            if ind == len(columnOrderings) - 1:
+                query += " {})".format(resultantValue)
+            else:
+                query += " {},".format(resultantValue)
 
     return query

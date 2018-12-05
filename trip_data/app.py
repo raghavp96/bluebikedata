@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, redirect, jsonify, url_for
+from flask import Flask, request, redirect, jsonify, url_for, make_response
 from werkzeug.utils import secure_filename
+
+import trip_data
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 upload_folder = '/uploads'
@@ -37,12 +39,7 @@ def upload_file():
     return jsonify(result)
 
 def convertCSVToJSONandDoSomeStuffHere(filename):
-    # You can assume that the file is in the uploads folder
-    with open(app.config['UPLOAD_FOLDER'] + '/' + filename) as f:
-        # Your code to convert CSV to JSON can go here
-        return f.readline()
-
-    return "RIP"
+    return make_response(jsonify(trip_data.default_convert_csv_to_json(app.config['UPLOAD_FOLDER'] + '/' + filename)))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
