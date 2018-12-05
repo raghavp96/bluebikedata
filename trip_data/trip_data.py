@@ -1,11 +1,13 @@
 import csv, json, requests
 
-api_svc_url = "http://api_svc:8080/"
-test_api_svc_url = "http://localhost:8001/"
+import get_bad_station_ids
 
-def default_convert_csv_to_json(csvfilepath):
+def default_convert_csv_to_json(csvfilepath, api_svc_url):
     post_data = {"trips":[]}
     tripsToIgnore = []
+
+    unknown_station_ids = get_bad_station_ids.find_stations(csvfilepath, api_svc_url)
+
     with open(csvfilepath) as csv_file:
         fieldnames = ("tripduration","start_time","end_time","start_station","start_station_name",
         "start_station_latitude","start_station_longitude","stop_station","end_station_name",
@@ -38,6 +40,9 @@ def default_convert_csv_to_json(csvfilepath):
                     tripsToIgnore.append(indx)
                 else:  
                     if key in numberColumns:
+                        if key == "start_station" or key == "stop_station":
+                            if int(trip[key]) in unknown_station_ids:
+                                tripsToIgnore.append(indx)
                         trip[key] = int(trip[key])
                     elif key in dateColumns:
                         trip[key] = trip[key].split(".")[0]
@@ -46,13 +51,19 @@ def default_convert_csv_to_json(csvfilepath):
             
             trip["trip_id"] = latest_trip_id
     
-    for tripIndex in tripsToIgnore:
-        post_data.get("trips").pop(tripIndex, None)
+    old_post_data_length = len(post_data["trips"]) # to test whether we're actually removing data from post_data
+
+    # keeps all trips whose trip_id is not in tripsToIgnore
+    post_data["trips"][:] = [trip for trip in post_data["trips"] if trip["trip_id"] not in tripsToIgnore]
+
+    new_post_data_length = len(post_data["trips"])
 
     # # return post_data
     result = requests.post(api_svc_url + "trip/data-creator/", json=post_data)
     response = {
         "API Response Code: " : result.status_code,
-        "API Response: " : result.text
+        "API Response: " : result.text,
+        "Before" : old_post_data_length,
+        "After" : new_post_data_length
     } 
     return response

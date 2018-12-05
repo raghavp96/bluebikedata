@@ -4,6 +4,9 @@ from werkzeug.utils import secure_filename
 
 import trip_data
 
+api_svc_url = "http://api_svc:8080/"
+test_api_svc_url = "http://localhost:8001/"
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 upload_folder = '/uploads'
 allowed_extensions = set(['csv'])
@@ -33,13 +36,13 @@ def upload_file():
         elif file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            result["status"] = "Uploaded"
-            result["response"] = convertCSVToJSONandDoSomeStuffHere(filename)
+            result["status"] = "File Uploaded"
+            result["response"] = convertCSVToJSONandDoSomeStuffHere(filename, test_api_svc_url)
 
     return jsonify(result)
 
-def convertCSVToJSONandDoSomeStuffHere(filename):
-    return make_response(jsonify(trip_data.default_convert_csv_to_json(app.config['UPLOAD_FOLDER'] + '/' + filename)))
+def convertCSVToJSONandDoSomeStuffHere(filename, api_url):
+    return trip_data.default_convert_csv_to_json(app.config['UPLOAD_FOLDER'] + '/' + filename, api_url)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
