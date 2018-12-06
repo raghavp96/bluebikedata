@@ -4,8 +4,7 @@ from werkzeug.utils import secure_filename
 
 import trip_data
 
-api_svc_url = "http://api_svc:8080/"
-test_api_svc_url = "http://localhost:8001/"
+api_svc_url = os.getenv("API_SVC_URL", "http://localhost:8001/")
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 upload_folder = '/uploads'
@@ -37,7 +36,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             result["status"] = "File Uploaded"
-            result["response"] = convertCSVToJSONandDoSomeStuffHere(filename, test_api_svc_url)
+            result["response"] = convertCSVToJSONandDoSomeStuffHere(filename, api_svc_url)
 
     return jsonify(result)
 

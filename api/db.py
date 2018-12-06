@@ -2,26 +2,16 @@
 
 import pymysql.cursors
 import requests
+import os
 
 # db.py: Connects and sends SQL queries to DB
 
+auth_svc_url = os.getenv("AUTH_SVC_URL", "http://localhost:8000/")
 
 def __get_connection(role):
-    # Don't hardcode
-    auth_svc_address = "http://auth_svc"
-    auth_svc_port = "8080"
-    auth_svc_endpoint = "/"
-
-    # For local testing run make start - stop this container only
-    # Uncomment the following details and comment the above:
-
-    # auth_svc_address = "http://localhost"
-    # auth_svc_port = "8000"
-    # auth_svc_endpoint = "/"
 
     # and then run `python app.py`
-    credentials = requests.get(
-        auth_svc_address + ":" + auth_svc_port + auth_svc_endpoint + role).json()
+    credentials = requests.get(auth_svc_url + role).json()
 
     return pymysql.connect(
         host=credentials["host"],

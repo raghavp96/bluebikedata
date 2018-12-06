@@ -1,12 +1,12 @@
 import time
 import threading
 import json
+import os
 
 import station_status
 import station
 
-api_svc_url = "http://api_svc:8080/"
-test_api_svc_url = "http://localhost:8001/"
+api_svc_url = os.getenv("API_SVC_URL", "http://localhost:8001/")
 
 polling_md_functions = [
     {
