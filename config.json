@@ -3,25 +3,25 @@
         "Name" : "app_network",
         "Containers" : [
             {
-                "Folder" : "auth",
+                "Folder" : "api_server/auth",
                 "Name" : "auth_svc",
                 "ExternalPort" : "8000",
                 "Port" : "8080"
             },
             {
-                "Folder" : "api",
+                "Folder" : "api_server/api",
                 "Name" : "api_svc",
                 "ExternalPort" : "8001",
                 "Port" : "8080"
             },
             {
-                "Folder" : "live_data",
+                "Folder" : "api_server/live_data",
                 "Name" : "live_data_svc",
                 "ExternalPort" : "8002",
                 "Port" : "8080"
             },
             {
-                "Folder" : "trip_data",
+                "Folder" : "api_server/trip_data",
                 "Name" : "data_svc",
                 "ExternalPort" : "8003",
                 "Port" : "8080"
