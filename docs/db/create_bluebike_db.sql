@@ -17,6 +17,7 @@ create table if not exists station (
     has_kiosk tinyint(2) not null
 );
 
+
 create table if not exists trip (
 	trip_id int primary key not null,
     bike_id int not null,
@@ -48,5 +49,8 @@ create table if not exists station_status (
     foreign key (station_id) references station(station_id)    
 );
 
+insert into station values
+(67, "MIT at Mass Ave / Amherst St", 42.3581,71.093198,"M23006", "CREDITCARD", 27,"https://www.bluebikes.com/app?station_id=67",true,true);
+select * from station;
 -- Error Code: 1068. Multiple primary key defined
 
