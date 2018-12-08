@@ -13,6 +13,9 @@ with open('config.json') as json_file:
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+def build():
+    __build_containers()
+
 def start():
     __build_containers()
     __create_network()
@@ -28,20 +31,20 @@ def restart():
 
 def __build_containers():
     for container in data["Network"]["Containers"]:
-        docker_client.images.build(path=dir_path +'/' + container["Folder"], tag=container["Name"], rm=True)
+        docker_client.images.build(path=dir_path +'/' + container["Folder"], tag=container["ImageName"], rm=True)
     
 def __create_network():
     docker_client.networks.create(data["Network"]["Name"], driver="bridge")
 
 def __run():
     for container in data["Network"]["Containers"]:
-        docker_client.containers.run(name=container["Name"], image=container["Name"], detach=True, network=data["Network"]["Name"], ports={container["Port"] + '/tcp': container["ExternalPort"]}, publish_all_ports=True)        
+        docker_client.containers.run(name=container["ContainerName"], image=container["ImageName"], detach=True, network=data["Network"]["Name"], ports={container["Port"] + '/tcp': container["ExternalPort"]}, publish_all_ports=True)        
 
 def __stop_and_remove_containers():
     for container in data["Network"]["Containers"]:
-        s = subprocess.call(["docker", "stop", container["Name"]])
+        s = subprocess.call(["docker", "stop", container["ContainerName"]])
         print(s)
-        s = subprocess.call(["docker", "container", "rm", container["Name"]])
+        s = subprocess.call(["docker", "container", "rm", container["ContainerName"]])
         print(s)
 
 def __remove_network():
@@ -49,6 +52,7 @@ def __remove_network():
     print(s)
 
 functions = {
+    'build' : build,
     'start' : start,
     'stop' : stop,
     'restart' : restart

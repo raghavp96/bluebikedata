@@ -4,28 +4,28 @@
         "Containers" : [
             {
                 "Folder" : "api_server/auth",
-                "ImageName" : "gcr.io/cs3200-215502/auth_svc:v1",
+                "ImageName" : "auth_svc",
                 "ContainerName" : "auth_svc",
                 "ExternalPort" : "8000",
                 "Port" : "8080"
             },
             {
                 "Folder" : "api_server/api",
-                "ImageName" : "gcr.io/cs3200-215502/api_svc:v1",
+                "ImageName" : "api_svc",
                 "ContainerName" : "api_svc",
                 "ExternalPort" : "8001",
                 "Port" : "8080"
             },
             {
                 "Folder" : "api_server/live_data",
-                "ImageName" : "gcr.io/cs3200-215502/live_data_svc:v1",
+                "ImageName" : "live_data_svc",
                 "ContainerName" : "live_data_svc",
                 "ExternalPort" : "8002",
                 "Port" : "8080"
             },
             {
                 "Folder" : "api_server/trip_data",
-                "ImageName" : "gcr.io/cs3200-215502/data_svc:v1",
+                "ImageName" : "data_svc",
                 "ContainerName" : "data_svc",
                 "ExternalPort" : "8003",
                 "Port" : "8080"

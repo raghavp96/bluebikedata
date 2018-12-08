@@ -1,1 +1,1 @@
-docker
+docker==3.6.0
