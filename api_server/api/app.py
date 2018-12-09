@@ -107,4 +107,4 @@ def query_entity(entity, role="default"):
 #     return jsonify(json.loads(simplejson.dumps(result)))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8001)

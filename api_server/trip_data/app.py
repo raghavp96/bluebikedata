@@ -44,4 +44,4 @@ def convertCSVToJSONandDoSomeStuffHere(filename, api_url):
     return trip_data.default_convert_csv_to_json(app.config['UPLOAD_FOLDER'] + '/' + filename, api_url)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8003)
