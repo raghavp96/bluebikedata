@@ -24,7 +24,7 @@ create table if not exists trip (
     start_time datetime not null,
     end_time datetime not null,
     usertype enum('Customer', 'Subscriber') not null,
-    birthyear year not null,
+    birthyear int not null,
     gender tinyint not null,
     start_station int not null,
     stop_station int not null,
