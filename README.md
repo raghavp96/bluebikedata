@@ -15,17 +15,17 @@ A database for blue bike data
 		- Based on what type of user is calling the API, will provision a different DB connection
 			- If we are calling it from front-end server, then we assume the unauthenticated, default role ""
 			- If we are calling it via our data service, then we assume the authenticate role "data-creator"
-	- A Data Service (@TODO Need to build this):
-		- A container that calls the API to upload data to our DB
-			- Should be able to read and write to DB
+	- A Live Data Service :
+		- A container that calls the API to upload live data from GBFS to our DB
+			- Will always be running, polling https://gbfs.bluebikes.com/gbfs/gbfs.json for data, and adding that to DB
+			- Will also have an additional method to upload data from CSV files
+	- A CSV Data Service :
+		- A container that calls the API to upload csv data provided by users to our DB
 			- Will always be running, polling https://gbfs.bluebikes.com/gbfs/gbfs.json for data, and adding that to DB
 			- Will also have an additional method to upload data from CSV files
 
 - The Frontend:
-	- An NGINX server:
-		- Serves content in React and/or D3.
-		- Will be able to query DB and do some visualizations here
-		- @TODO Need to be more specific
+	- HTML, CSS and Tableau server
 	
 #### Other Topics
 

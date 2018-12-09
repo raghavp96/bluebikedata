@@ -1,12 +1,10 @@
-set -v
-
 # Talk to the metadata server to get the project id
 PROJECTID=$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")
 
-# Install logging monitor. The monitor will automatically pickup logs sent to
-# syslog.
-curl -s "https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh" | bash
-service google-fluentd restart &
+# # Install logging monitor. The monitor will automatically pickup logs sent to
+# # syslog.
+# curl -s "https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh" | bash
+# service google-fluentd restart &
 
 # Install dependencies from apt
 apt-get update
@@ -14,7 +12,7 @@ apt-get install -yq \
     git build-essential supervisor python python-dev python-pip libffi-dev \
     libssl-dev
 
-# FROM https://cloud.google.com/python/tutorials/bookshelf-on-compute-engine#multiple_instances
+# # FROM https://cloud.google.com/python/tutorials/bookshelf-on-compute-engine#multiple_instances
 
 # Create a pythonapp user. The application will run as this user.
 useradd -m -d /home/pythonapp pythonapp
@@ -26,36 +24,10 @@ pip install --upgrade pip virtualenv
 # git requires $HOME and it's not set during the startup script.
 export HOME=/root
 git config --global credential.helper gcloud.sh
-git clone https://source.developers.google.com/p/$PROJECTID/r/bluebikedata /opt/app
-
-# Install app dependencies
-virtualenv -p python3 /opt/app/7-gce/env
-source /opt/app/7-gce/env/bin/activate
-/opt/app/7-gce/env/bin/pip install -r /opt/app/7-gce/requirements.txt
+git clone https://source.developers.google.com/p/cs3200-215502/r/bluebikedata /opt/app
 
 # Make sure the pythonapp user owns the application code
 chown -R pythonapp:pythonapp /opt/app
 
-# Configure supervisor to start gunicorn inside of our virtualenv and run the
-# application.
-cat >/etc/supervisor/conf.d/python-app.conf << EOF
-[program:pythonapp]
-directory=/opt/app/7-gce
-command=/opt/app/7-gce/env/bin/honcho start -f ./procfile worker bookshelf
-autostart=true
-autorestart=true
-user=pythonapp
-# Environment variables ensure that the application runs inside of the
-# configured virtualenv.
-environment=VIRTUAL_ENV="/opt/app/7-gce/env",PATH="/opt/app/7-gce/env/bin",\
-    HOME="/home/pythonapp",USER="pythonapp"
-stdout_logfile=syslog
-stderr_logfile=syslog
-EOF
-
-supervisorctl reread
-supervisorctl update
-
+cd /opt/app
 make start
-
-# Application should now be running under supervisor
