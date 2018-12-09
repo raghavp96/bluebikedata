@@ -29,6 +29,13 @@
                 "ContainerName" : "data-svc",
                 "ExternalPort" : "8003",
                 "Port" : "8003"
+            },
+            {
+                "Folder" : "front_end",
+                "ImageName" : "nginx-svc",
+                "ContainerName" : "nginx-svc",
+                "ExternalPort" : "8080",
+                "Port" : "8080"
             }
         ]
     } 

@@ -1,6 +1,9 @@
 # bluebikedata
 A database for blue bike data
 
+We are live! - Check out:
+	* our Front-End at: http://35.245.104.115:8080/
+
 ### Project Architecture
 
 #### Outline
@@ -25,7 +28,9 @@ A database for blue bike data
 			- Will also have an additional method to upload data from CSV files
 
 - The Frontend:
-	- HTML, CSS and Tableau server
+	- An Nginx Service:
+		- Host HTML, CSS with and embedded Tableau module
+
 	
 #### Other Topics
 
@@ -37,7 +42,7 @@ A database for blue bike data
 	- Ex: The API service needs to get DB credentials from the Auth service.
 
 
-### Installation and Running
+### Installation and Running Locally
 
 1. Install MySQL Server on your device, or create one on Google Cloud Platform's Cloud SQL.
 	- Recommended: Create two users (beyond just the root connection): 
@@ -57,4 +62,20 @@ A database for blue bike data
 
 	where you should see jsons displayed on the page
 11. Run `make stop` to stop all containers
+
+
+### Deployment
+
+All of the files in `gcp/` are irrelevant for the purposes of running locally. They are usedpurely for deployment.
+
+The Deployment Process:
+
+1. We build and push the Docker images for all our services into a precreated Project on Google Container Registry.
+
+2. Our API service, Auth service, and Data services are then bundled into one Kubernetes Deployment, which we've exposed as a Kubernetes Service. 
 	
+	-  We did this to allow each container to be on the same host network, to mirror our local Docker intercontainer communication configuration )
+
+3. Our Front End Service is then bundled into its own Kubernetes Deployment, which we've exposed as a separate Kubernetes Service.
+
+	- For security reasons we whitelist the IP's of machines with access to our CloudSQL Instance

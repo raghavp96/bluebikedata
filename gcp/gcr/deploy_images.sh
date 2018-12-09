@@ -1,22 +1,24 @@
-# echo "Building and pushing latest images to GKE Container Registry...\n"
+echo "Building and pushing latest images to GKE Container Registry...\n"
 
-# PROJECT_ID="$(gcloud config get-value project -q)"
+PROJECT_ID="$(gcloud config get-value project -q)"
 
-# for obj in $(less config.json | jq -c '.Network.Containers[]') 
-# do 
-#     ImgName="$(echo $obj | jq -r '.ImageName')"
-#     FolderName="$(echo $obj | jq -r '.Folder')"
-#     echo "Building image: ${ImgName}"
-#     echo "Image Folder: ${FolderName}"
-#     echo ""
+ROOT_DIR="../../"
 
-#     docker build -t gcr.io/${PROJECT_ID}/${ImgName}:v1 "./$FolderName"
+for obj in $(less $ROOT_DIR/config.json | jq -c '.Network.Containers[]') 
+do 
+    ImgName="$(echo $obj | jq -r '.ImageName')"
+    FolderName="$(echo $obj | jq -r '.Folder')"
+    echo "Building image: ${ImgName}"
+    echo "Image Folder: ${FolderName}"
+    echo ""
 
-#     echo "Pushing image to Google Container Registry: ${ImgName}"
-#     echo ""
+    docker build -t gcr.io/${PROJECT_ID}/${ImgName}:v1 "$ROOT_DIR/$FolderName"
 
-#     docker push gcr.io/${PROJECT_ID}/${ImgName}:v1
+    echo "Pushing image to Google Container Registry: ${ImgName}"
+    echo ""
 
-#     echo "Done"
-#     sleep 5
-# done
+    docker push gcr.io/${PROJECT_ID}/${ImgName}:v1
+
+    echo "Done"
+    sleep 5
+done
