@@ -76,6 +76,8 @@ The Deployment Process:
 	
 	-  We did this to allow each container to be on the same host network, to mirror our local Docker intercontainer communication configuration )
 
+	- Our API is up (kind of) at: http://35.186.161.84:8001/
+
 3. Our Front End Service is then bundled into its own Kubernetes Deployment, which we've exposed as a separate Kubernetes Service.
 
 	- For security reasons we whitelist the IP's of machines with access to our CloudSQL Instance
