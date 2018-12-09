@@ -1,3 +1,6 @@
+build:
+	python container_manager.py build
+
 start:
 	python container_manager.py start 
 

@@ -1,6 +1,6 @@
 FROM python:3.5-alpine
 
-ENV AUTH_SVC_URL "http://auth_svc:8080/"
+ENV AUTH_SVC_URL "http://auth-svc:8000/"
 
 RUN apk add -U --no-cache gcc build-base linux-headers ca-certificates \ 
                           python3 python3-dev libffi-dev libressl-dev
