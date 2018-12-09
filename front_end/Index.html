@@ -1,0 +1,272 @@
+<html>
+
+    <head>
+        <title>BlueBike Analysis</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="dbproject.js"></script>
+        <link rel="stylesheet" href="dbproject.css">
+    </head>
+    
+    <body>
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+        <table>
+            <tr>
+                <td class="alignleft">
+                    <h1 style="font-family: sans-serif; color:steelblue;">
+                        <img src="//d21xlh2maitm24.cloudfront.net/bst/Blue-Bikes-SM-logo_p_WEB_v2.svg?mtime=20180424122335" class="logo" alt="Logo"> Analysis
+                    </h1>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                    <p style="font-family: sans-serif">Final Project - Raghav, Sophie, Ari, and Jeff</p>
+                </td>
+                </tr>
+                <tr>
+                <td class="alignleft">
+                <ul class="nav nav-pills">
+                          <li class="active"><a href="#home">Home</a></li>
+                          <li><a href="#motivation">Motivation / Significance</a></li>
+                          <li><a href="#application">Application Architecture</a></li>
+                          <li><a href="#datasources">Data Sources</a></li>
+                          <li><a href="#usecases">Use Cases</a></li>
+                          <li><a href="#visuals">Visuals</a></li>
+                          <li><a href="https://github.com/raghavp96/bluebikedata">Backend</a></li>
+                </ul>
+                </td>
+                </tr>
+        </table>
+
+    <!--Home-->
+        <div id="home">
+            <h2 style="font-family: sans-serif; color:steelblue;">What is Blue Bike?</h2>
+        </div>
+        <div>
+            <h4 style="font-family: sans-serif; color:skyblue;"> Our Idea</h4>
+        </div>
+        <div>
+            <ul style="font-family: sans-serif">
+                <li>Develop insights on existing BlueBike trip data, and develop a method of analyzing and providing feedback from live feed data from blue bike stations.
+                </li>
+                <li>Analyzing trip data, station status data, and station location data, in order to create a comprehensive understanding of blue bikes. 
+                </li>
+                <ul>
+                    <li>
+                    What time of day are blue bikes being most utilized.
+                    </li>
+                    <li>
+                    Which gender is utilizing blue bikes data more often
+                    </li>
+                    <li>
+                    Which age group is utilizing blue bikes more often
+                    </li>
+                </ul>
+            </ul>
+            
+        </div>
+
+    <!--Motivation & Significance -->
+                
+        <div id="motivation">
+            <h2 style="font-family: sans-serif; color:steelblue;">Motivation and Significance</h2>
+        </div>
+        <div>
+            <h4 style="font-family: sans-serif; color:skyblue;">Motivation</h4>
+        </div>
+        <div>
+            <ul style="font-family: sans-serif">
+                <li>
+                    Bikes are an extremely efficient way to get around anywhere, especially in a city. However, it seems that more and more people are using cars.
+                </li>
+                <li>
+                    Paired with environmental issues, and recent reports of climate change having severe impacts on our society, it makes sense to engage in alternative modes of transportation.
+                </li> 
+            </ul>
+        </div>
+        <div>
+            <h4 style="font-family: sans-serif; color:skyblue;">Significance</h4>
+        </div>
+        <div>
+            <ul style="font-family: sans-serif">
+                <li>Bluebike is already a analytically driven company, looking for improvements to make and tools to add to their already existing interface and service. 
+                </li>
+                <li>Our ideas should help develop new food for thought, and help expand on the currently existing data that bluebike has collected.
+                </li>
+                <li>Maybe even one day, have them integrate our ideas into their application.
+                </li>
+        </ul>
+        </div>
+        
+    <!--Application Architecture-->
+        
+        <div id="application">
+            <h2 style="font-family: sans-serif; color:steelblue;">Application Architecture</h2>
+        </div>
+        <div>
+            <img class="center" src="https://lh3.googleusercontent.com/L9PKxL2MN_bVR9cXYz4A3_234GS_0tzXS9TPxwp4o1n8BJyDPv0J6BcksY8Tj6Xp8W00Gia5-CEiSsHAZMfuW6m7Hm01t8q0TH6N5wKpcl9gY6UiZxjuQGH_vFMbDAQWIItHxRNuGDo" class="example">
+        </div>
+        <div>
+            <ul style="font-family: sans-serif">
+                <li>Front End - HTML, CSS, Tableau (hosted on awardspace)
+                </li>
+                <li>API - Flask/Python (hosted on GCP)
+                </li>
+                <li>Data Services: Flask/Python (hosted on GCP)
+                </li>
+                <li>DB - MySQL 5.7 CloudSQL (hosted on GCP)
+                </li>
+                <li>Data Sources - CSV, JSON (GBFS)
+                </li>
+            </ul>
+        </div>
+        
+    <!-- Conceptual Design -->
+        <div>
+            <h2 style="font-family: sans-serif; color:steelblue;">Conceptual Design</h2>
+        </div>
+        
+        <img  class="center" src="https://lh3.googleusercontent.com/SfAdF01F7FbJjmrotsJ-LsQWCP9KKFeEh1IUN3ngO6kYb5QCXLef-xKz8dcbkoXJfTPTIi_gMe_N659tjvhXyCWsvmDckzyzYwv4Vp7yvze_vUjQpX8q7fuUDoLyQAT7KoqlVBpGObk">
+        
+    <!-- Data Sources -->
+        <div id="datasources">
+            <h2 style="font-family: sans-serif; color:steelblue;">Data Sources</h2>
+        </div>
+        <div>
+            <h4 style="font-family: sans-serif; color:skyblue;">Quarterly Trip Data</h4>
+        </div>
+        <div>
+            <ul>
+                <li>BlueBike publishes trip data every quarter for each month
+                </li>
+                <ul>
+                    <li>CSV Format
+                    </li>
+                </ul>
+                <li>
+                    They clean the data of test trips taken by staff and 60 second trips
+                </li>
+            </ul>
+        </div>
+        <img class="center" src="https://lh3.googleusercontent.com/TNd3Mx4b7cu7H0Fp9v4fiOPcnod6XVCF3YUkfWRussSkJOrla3nPU2Ruui-mh3hU5VMO7TWRyzeLZOgLkN_koYHF26FTD2JFsZK_v5XUB_FAz8Lvntndsz5gASks781uF48RMJPVej0">
+        
+        <div>
+            <h4 style="font-family: sans-serif; color:skyblue;">Quarterly Trip Data</h4>
+        </div>
+        
+        <div>
+            <ul>
+                <li>Real-time system data in General Bikeshare Feed Specification format (GBFS)
+                </li>
+                <br>
+                <ul>
+                    <li>Bike share industry standard
+                    </li>
+                    <li>Allows easy future project integration with other bike share data
+                    </li>
+                </ul>
+                <li>We poll the live data JSON every 10 minutes
+                </li>
+            </ul>
+            
+    <!-- BlueBike System Data Picture -->
+            <!--
+          <img class="center" src="https://lh4.googleusercontent.com/CdvISrMZNAcaqWvF9lPJft9cO0rViIG8pgAcRaHxss8CXwaphtRFT4k5vG-geLD6bjLTqBVCigy0dC0ElZlBU-mxpw2CJbDYrL8Oh_n2WXeHkj5lyVMrOTVXFN3nDLZO0IRdeRrNB4Y">  
+            -->
+        
+    <!--Use Cases -->
+            <div id="usecases">
+                <h2 style="font-family: sans-serif; color:steelblue;">Use Cases</h2>
+            </div>
+            <div>
+                <ul>
+                    <li>Identifying Trends and Predictive Analysis
+                    </li>
+                    <li>Provide Recommendations for new users
+                    </li>
+                    <ul>
+                        <li>Who is the Target Audience?
+                        </li>
+                        <li>Where are the most popular bike locations in the Metro-Boston Area?
+                        </li>
+                        <li>When bikes are busiest?
+                        </li>
+                        <li>What is the growth in bike usage over the past couple of years?
+                        </li>
+                        <li>Are different age groups spiking in growth in particular?
+                        </li>
+                        <li>What are the go-to biking travel start and end stations for first time users?
+                        </li>
+                        <li>Is there a particular route that is commonly used?
+                        </li>
+                        <li>Has the ratio between ragular users to single users grown?
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+
+            
+    <!-- Visuals -->
+            <div id="visuals">
+                <h2 style="font-family: sans-serif; color:steelblue;">Visuals</h2>
+            </div>
+            
+            <div class='tableauPlaceholder' id='viz1543986984824' style='position: relative'>
+            <noscript>
+                <a href='#'>
+                <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;FinalDemo_1&#47;Story1&#47;1_rss.png' style='border: none' />
+                </a>
+            </noscript>
+            <object class='tableauViz'  style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                <param name='embed_code_version' value='3' /> 
+                <param name='site_root' value='' />
+                <param name='name' value='FinalDemo_1&#47;Story1' />
+                <param name='tabs' value='no' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;FinalDemo_1&#47;Story1&#47;1.png' /> 
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+                <param name='filter' value='publish=yes' />
+            </object></div>                
+        <script type='text/javascript'>                    
+            var divElement = document.getElementById('viz1543986984824');                    
+            var vizElement = divElement.getElementsByTagName('object')[0];                    
+            vizElement.style.width='1016px';vizElement.style.height='991px';                    
+            var scriptElement = document.createElement('script');                    
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+        </script>
+            
+        </div>
+        
+        
+    
+    </body>
+
+<script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("myBtn").style.display = "block";
+                } else {
+                    document.getElementById("myBtn").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+</script>
+    
+
+</html>
