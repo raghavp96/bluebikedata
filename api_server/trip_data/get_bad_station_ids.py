@@ -21,4 +21,5 @@ def find_stations(csvfilepath, url):
             if int(stop_station_id) not in station_ids:
                 bad_ids.append(int(stop_station_id))
     bad_ids=list(OrderedDict.fromkeys(bad_ids))
+    print(bad_ids)
     return bad_ids

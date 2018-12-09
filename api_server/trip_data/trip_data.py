@@ -34,17 +34,13 @@ def default_convert_csv_to_json(csvfilepath, api_svc_url):
         for indx, trip in enumerate(post_data["trips"]):
             # Add the trip id to the JSON
             latest_trip_id=latest_trip_id+1
-
             for key in trip.keys():
                 if trip[key] is None:
                     tripsToIgnore.append(indx)
                 else:  
                     if key in numberColumns:
-                        if key == "start_station" or key == "stop_station":
-                            if int(trip[key]) in unknown_station_ids:
-                                tripsToIgnore.append(indx)
                         trip[key] = int(trip[key])
-                    elif key in dateColumns:
+                    if key in dateColumns:
                         trip[key] = trip[key].split(".")[0]
                     else:
                         trip[key] = trip[key]
@@ -53,11 +49,10 @@ def default_convert_csv_to_json(csvfilepath, api_svc_url):
     
     old_post_data_length = len(post_data["trips"]) # to test whether we're actually removing data from post_data
 
-    # keeps all trips whose trip_id is not in tripsToIgnore
-    post_data["trips"][:] = [trip for trip in post_data["trips"] if trip["trip_id"] not in tripsToIgnore]
-
+    post_data["trips"] = [trip for trip in post_data["trips"] if trip["start_station"] not in unknown_station_ids]
+    post_data["trips"] = [trip for trip in post_data["trips"] if trip["stop_station"] not in unknown_station_ids]
     new_post_data_length = len(post_data["trips"])
-
+    
     # # return post_data
     result = requests.post(api_svc_url + "trip/data-creator/", json=post_data)
     response = {
@@ -66,4 +61,5 @@ def default_convert_csv_to_json(csvfilepath, api_svc_url):
         "Before" : old_post_data_length,
         "After" : new_post_data_length
     } 
+
     return response
