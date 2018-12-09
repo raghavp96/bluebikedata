@@ -2,11 +2,8 @@ import json
 import os
 import subprocess
 import sys
-import docker
 
 # cloned and adapted from https://github.com/raghavp96/dockernetes
-
-docker_client = docker.from_env()
 
 with open('config.json') as json_file:  
     data = json.load(json_file)
@@ -31,14 +28,17 @@ def restart():
 
 def __build_containers():
     for container in data["Network"]["Containers"]:
-        docker_client.images.build(path=dir_path +'/' + container["Folder"], tag=container["ImageName"], rm=True)
+        s = subprocess.call(["docker", "build", "-t", container["ImageName"], dir_path +'/' + container["Folder"]])
+        print(s)
     
 def __create_network():
-    docker_client.networks.create(data["Network"]["Name"], driver="bridge")
+    s = subprocess.call(["docker", "network", "create", "--driver", "bridge", data["Network"]["Name"]])
+    print(s)
 
 def __run():
     for container in data["Network"]["Containers"]:
-        docker_client.containers.run(name=container["ContainerName"], image=container["ImageName"], detach=True, network=data["Network"]["Name"], ports={container["Port"] + '/tcp': container["ExternalPort"]}, publish_all_ports=True)        
+        s = subprocess.call(["docker", "run", "--name", container["ContainerName"], "--network", data["Network"]["Name"], "-p", container["ExternalPort"] + ":" + container["Port"], "--detach", container["ImageName"]])
+        print(s)
 
 def __stop_and_remove_containers():
     for container in data["Network"]["Containers"]:
