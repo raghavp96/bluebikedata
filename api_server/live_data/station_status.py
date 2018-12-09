@@ -22,7 +22,7 @@ def poll(api_svc_url):
 
 
 def __get_last_station_status_id(api_svc_url):
-    url = api_svc_url + "station_status/latest_id"
+    url = api_svc_url + "station_status_latest_id"
     latest_station_status_id = requests.get(
         url).json()["latest_station_status_id"]
 

@@ -9,21 +9,25 @@
    containers:
      - name: auth-svc
        image: gcr.io/cs3200-215502/auth-svc:v1
+       imagePullPolicy: Always
        ports:
          - containerPort: 8000
            hostPort: 8000
      - name: api-svc
        image: gcr.io/cs3200-215502/api-svc:v1
+       imagePullPolicy: Always
        ports:
          - containerPort: 8001
            hostPort: 8001
-     - name: live-data-svc
-       image: gcr.io/cs3200-215502/live-data-svc:v1
-       ports:
-         - containerPort: 8002
-           hostPort: 8002
+    #  - name: live-data-svc
+    #    image: gcr.io/cs3200-215502/live-data-svc:v1
+    #    imagePullPolicy: Always
+    #    ports:
+    #      - containerPort: 8002
+    #        hostPort: 8002
      - name: data-svc
        image: gcr.io/cs3200-215502/data-svc:v1
+       imagePullPolicy: Always
        ports:
          - containerPort: 8003
            hostPort: 8003
