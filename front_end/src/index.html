@@ -106,15 +106,15 @@
             <h2 style="font-family: sans-serif; color:steelblue;">Application Architecture</h2>
         </div>
         <div>
-            <img class="center" src="https://lh3.googleusercontent.com/L9PKxL2MN_bVR9cXYz4A3_234GS_0tzXS9TPxwp4o1n8BJyDPv0J6BcksY8Tj6Xp8W00Gia5-CEiSsHAZMfuW6m7Hm01t8q0TH6N5wKpcl9gY6UiZxjuQGH_vFMbDAQWIItHxRNuGDo" class="example">
+            <img class="center" src="https://raw.githubusercontent.com/raghavp96/bluebikedata/master/docs/bluebikedata_app_architecture.png" class="example">
         </div>
         <div>
             <ul style="font-family: sans-serif">
-                <li>Front End - HTML, CSS, Tableau (hosted on awardspace)
+                <li>Front End - HTML, CSS, Tableau (hosted on Google Kubernetes Engine)
                 </li>
-                <li>API - Flask/Python (hosted on GCP)
+                <li>API - Flask/Python (hosted on Google Kubernetes Engine)
                 </li>
-                <li>Data Services: Flask/Python (hosted on GCP)
+                <li>Data Services: Flask/Python (hosted on Google Kubernetes Engine)
                 </li>
                 <li>DB - MySQL 5.7 CloudSQL (hosted on GCP)
                 </li>
@@ -170,6 +170,7 @@
                 <li>We poll the live data JSON every 10 minutes
                 </li>
             </ul>
+        </div>
             
     <!-- BlueBike System Data Picture -->
             <!--
@@ -213,40 +214,38 @@
                 <h2 style="font-family: sans-serif; color:steelblue;">Visuals</h2>
             </div>
             
-            <div class='tableauPlaceholder' id='viz1543986984824' style='position: relative'>
-            <noscript>
-                <a href='#'>
-                <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;FinalDemo_1&#47;Story1&#47;1_rss.png' style='border: none' />
-                </a>
-            </noscript>
-            <object class='tableauViz'  style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-                <param name='embed_code_version' value='3' /> 
-                <param name='site_root' value='' />
-                <param name='name' value='FinalDemo_1&#47;Story1' />
-                <param name='tabs' value='no' />
-                <param name='toolbar' value='yes' />
-                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;FinalDemo_1&#47;Story1&#47;1.png' /> 
-                <param name='animate_transition' value='yes' />
-                <param name='display_static_image' value='yes' />
-                <param name='display_spinner' value='yes' />
-                <param name='display_overlay' value='yes' />
-                <param name='display_count' value='yes' />
-                <param name='filter' value='publish=yes' />
-            </object></div>                
-        <script type='text/javascript'>                    
-            var divElement = document.getElementById('viz1543986984824');                    
-            var vizElement = divElement.getElementsByTagName('object')[0];                    
-            vizElement.style.width='1016px';vizElement.style.height='991px';                    
-            var scriptElement = document.createElement('script');                    
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);                
-        </script>
+            <div class='tableauPlaceholder' id='viz1544399782520' style='position: relative'>
+                <noscript>
+                    <a href='#'>
+                        <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;fi&#47;finalfinalproject&#47;Story1&#47;1_rss.png' style='border: none' />
+                    </a>
+                </noscript>
+                <object class='tableauViz'  style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='finalfinalproject&#47;Story1' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;fi&#47;finalfinalproject&#47;Story1&#47;1.png' /> <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
             
-        </div>
+            <script type='text/javascript'>                    
+                var divElement = document.getElementById('viz1544399782520');                    
+                var vizElement = divElement.getElementsByTagName('object')[0];                    
+                vizElement.style.width='1016px';vizElement.style.height='991px';                    
+                var scriptElement = document.createElement('script');                    
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+            </script>
         
         
-    
     </body>
 
 <script>
