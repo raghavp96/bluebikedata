@@ -1,8 +1,10 @@
 # bluebikedata
 A database for blue bike data
 
-We are live! - Check out:
-	* our Front-End at: http://35.245.104.115:8080/
+<!-- We are live! - Check out:
+	* our Front-End at: http://35.245.104.115:8080/ -->
+
+We're not live atm (we deployed to GCP but were running out of credit RIP) but you can run it locally heh
 
 ### Project Architecture
 
@@ -76,7 +78,7 @@ The Deployment Process:
 	
 	-  We did this to allow each container to be on the same host network, to mirror our local Docker intercontainer communication configuration )
 
-	- Our API is up (kind of) at: http://35.186.161.84:8001/
+	<!-- - Our API is up (kind of) at: http://35.186.161.84:8001/ -->
 
 3. Our Front End Service is then bundled into its own Kubernetes Deployment, which we've exposed as a separate Kubernetes Service.
 
