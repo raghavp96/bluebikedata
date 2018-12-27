@@ -1,10 +1,15 @@
 # bluebikedata
-A database for blue bike data
+
+### Background
+
+> Our goal is to develop insights on existing BlueBike trip data and create an application to aid in analyzing and providing feedback from live feed data from BlueBike stations. We seek to analyze trip data, station status data, and station location data, in order to create a comprehensive understanding of BlueBike usage.
 
 <!-- We are live! - Check out:
 	* our Front-End at: http://35.245.104.115:8080/ -->
 
-We're not live atm (we deployed to GCP but were running out of credit RIP) but you can run it locally heh
+We're not live atm (we deployed to GCP but were running out of credit RIP) but you can run it locally.
+
+This project provides a bare-bones application, not connected to any MySQL database. Provided that you have your own database you'd like to aggregate data in, we give you the means to define a database (see our schema in the `docs` directory), an API to access that database, services that use the API to insert data in the database, and finally a front end service with an interactive module for data visualization.
 
 ### Project Architecture
 
@@ -33,16 +38,29 @@ We're not live atm (we deployed to GCP but were running out of credit RIP) but y
 	- An Nginx Service:
 		- Host HTML, CSS with and embedded Tableau module
 
-	
-#### Other Topics
+#### Architecture Diagram
 
-1. Roles - We mention that different services/components will be hitting the API, and that they will assume different roles. This allows us to better tighten the security on what calls a user can make to our API. The roles are:
-	- Default - The front end will assume the `default` role, allowing it to make only GET requests
-	- Data Creator - The data service will need to be able to query and mutate the DB, and so assumes the `data-creator` role. It will be able to make both GET and POST
-2. Containers - We use containers here, adopting a microservice architecture. This allows for true process isolation, and allows us to increase security.
-3. `container_manager.py` and `config.json` - Cloned from https://github.com/raghavp96/dockernetes, these enable us to run services in their own container, attach them all to the same Docker network, so they can still communicate. Config.json allows us to specify what ports the services are running on.
-	- Ex: The API service needs to get DB credentials from the Auth service.
+![](./docs/bluebikedata_app_architecture.png)
 
+#### Database ER Diagram
+
+![](./docs/conceptual_model/ER_Diagram_Screenshot.png)
+
+### Visualizations
+
+Since we're not currently up, here are some fun visuals that show what kind of questions we can answer with the data we've aggregated from Bluebike.
+
+#### Bike Availability Heatmap
+
+A map of Boston, with Bluebike of stations represented as dots. The darker the dot, the more bikes the station has at the moment.
+
+![](./docs/visuals/bike_availability_map.PNG)
+
+#### Daily Average Bike vs. Dock Availability
+
+Plots the average bike availability and the average dock availability for the given station(s) at different hours during the day.
+
+![](./docs/visuals/avg_availability.png)
 
 ### Installation and Running Locally
 
@@ -83,3 +101,13 @@ The Deployment Process:
 3. Our Front End Service is then bundled into its own Kubernetes Deployment, which we've exposed as a separate Kubernetes Service.
 
 	- For security reasons we whitelist the IP's of machines with access to our CloudSQL Instance
+
+
+#### Other Topics
+
+1. Roles - We mention that different services/components will be hitting the API, and that they will assume different roles. This allows us to better tighten the security on what calls a user can make to our API. The roles are:
+	- Default - The front end will assume the `default` role, allowing it to make only GET requests
+	- Data Creator - The data service will need to be able to query and mutate the DB, and so assumes the `data-creator` role. It will be able to make both GET and POST
+2. Containers - We use containers here, adopting a microservice architecture. This allows for true process isolation, and allows us to increase security.
+3. `container_manager.py` and `config.json` - Cloned from https://github.com/raghavp96/dockernetes, these enable us to run services in their own container, attach them all to the same Docker network, so they can still communicate. Config.json allows us to specify what ports the services are running on.
+	- Ex: The API service needs to get DB credentials from the Auth service.
