@@ -60,7 +60,7 @@ A map of Boston, with Bluebike of stations represented as dots. The darker the d
 
 Plots the average bike availability and the average dock availability for the given station(s) at different hours during the day.
 
-![](./docs/visuals/avg_availability.png)
+![](./docs/visuals/avg_availability.PNG)
 
 ### Installation and Running Locally
 
